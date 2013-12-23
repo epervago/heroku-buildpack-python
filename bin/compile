@@ -166,13 +166,14 @@ source $BIN_DIR/steps/pylibmc
 # Libffi support.
 source $BIN_DIR/steps/cryptography
 
+# Numpy/scipy support
+source $BIN_DIR/steps/numpy-scipy
+
+# Force scikit-learn to use a specific script
+source $BIN_DIR/steps/scikit-learn
+
 # Install dependencies with Pip.
 sub-env $BIN_DIR/steps/pip-install
-
-# Django collectstatic support.
-#bpwatch start collectstatic
-#  source $BIN_DIR/steps/collectstatic
-#bpwatch stop collectstatic
 
 # ### Finalize
 #
