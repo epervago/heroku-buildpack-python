@@ -28,6 +28,8 @@ then
   echo "libffi.pc is in-place at $(pwd)/vendor/lib/pkgconfig/libffi.pc, libffi-based builds should work!"
 fi
 
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$(pwd)/lib/
+
 cd "$PREV_DIR"
 
 
