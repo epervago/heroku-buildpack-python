@@ -111,6 +111,7 @@ fi
 # ### The Cache
 puts-step "Creating cache directory in $CACHE_DIR"
 mkdir -p $CACHE_DIR
+ls -l $CACHE_DIR
 
 # Purge "old-style" virtualenvs.
 #bpwatch start clear_old_venvs
@@ -239,7 +240,10 @@ source $BIN_DIR/steps/scikit-learn
 # ### Finalize
 #
 
+export LIBRARY_PATH=$LIBRARY_PATH:/app/vendor/libffi-3.0/lib
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/app/vendor/libffi-3.0/lib
+
+puts-step "Setting environment variables (LD_LIBRARY_PATH = $LD_LIBRARY_PATH)"
 
 # Set context environment variables.
 set-env PATH '$HOME/.heroku/python/bin:$PATH'
