@@ -85,7 +85,7 @@ export LANG=en_US.UTF-8
 export C_INCLUDE_PATH=/app/.heroku/vendor/include:$BUILD_DIR/.heroku/vendor/include
 export CPLUS_INCLUDE_PATH=/app/.heroku/vendor/include:$BUILD_DIR/.heroku/vendor/include
 export LIBRARY_PATH=/app/.heroku/vendor/lib:$BUILD_DIR/.heroku/vendor/lib
-export LD_LIBRARY_PATH=$LIBRARY_PATH
+export LD_LIBRARY_PATH=$LIBRARY_PATH:/app/vendor/libffi-3.0/lib
 export PKG_CONFIG_PATH=/app/.heroku/vendor/lib/pkg-config:$BUILD_DIR/.heroku/vendor/lib/pkg-config
 
 # Switch to the repo's context.
@@ -203,6 +203,9 @@ bpwatch stop pylibmc_install
 
 # Numpy/scipy support
 source $BIN_DIR/steps/numpy-scipy
+
+# libffi, needed for the cryptography library
+source $BIN_DIR/steps/libffi
  
 # Install Mercurial if it appears to be required.
 if (grep -Fiq "hg+" requirements.txt) then
