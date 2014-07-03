@@ -99,7 +99,7 @@ export PKG_CONFIG_PATH=/app/.heroku/vendor/lib/pkg-config:$BUILD_DIR/.heroku/ven
 export C_INCLUDE_PATH=/app/.heroku/vendor/include:$BUILD_DIR/.heroku/vendor/include
 export CPLUS_INCLUDE_PATH=/app/.heroku/vendor/include:$BUILD_DIR/.heroku/vendor/include
 export LIBRARY_PATH=/app/.heroku/vendor/lib:$BUILD_DIR/.heroku/vendor/lib
-export LD_LIBRARY_PATH=$LIBRARY_PATH:/app/vendor/libffi-3.0/lib
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/app/vendor/libffi-3.0/lib
 export PKG_CONFIG_PATH=/app/.heroku/vendor/lib/pkg-config:$BUILD_DIR/.heroku/vendor/lib/pkg-config
 >>>>>>> Update compile
 
@@ -134,13 +134,14 @@ if [ ! -f runtime.txt ]; then
 fi
 
 # ### The Cache
+puts-step "Creating cache directory in $CACHE_DIR"
 mkdir -p $CACHE_DIR
 
 # Purge "old-style" virtualenvs.
-bpwatch start clear_old_venvs
-  [ -d $CACHE_DIR/$LEGACY_TRIGGER ] && rm -fr $CACHE_DIR/.heroku/bin $CACHE_DIR/.heroku/lib $CACHE_DIR/.heroku/include
-  [ -d $CACHE_DIR/$VIRTUALENV_LOC ] && rm -fr $CACHE_DIR/.heroku/venv $CACHE_DIR/.heroku/src
-bpwatch stop clear_old_venvs
+#bpwatch start clear_old_venvs
+#  [ -d $CACHE_DIR/$LEGACY_TRIGGER ] && rm -fr $CACHE_DIR/.heroku/bin $CACHE_DIR/.heroku/lib $CACHE_DIR/.heroku/include
+#  [ -d $CACHE_DIR/$VIRTUALENV_LOC ] && rm -fr $CACHE_DIR/.heroku/venv $CACHE_DIR/.heroku/src
+#bpwatch stop clear_old_venvs
 
 # Restore old artifacts from the cache.
 bpwatch start restore_cache
@@ -185,6 +186,8 @@ sub-env $BIN_DIR/steps/pip-install
 
 # ### Finalize
 #
+
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/app/vendor/libffi-3.0/lib
 
 # Set context environment variables.
 set-env PATH '$HOME/.heroku/python/bin:$PATH'
